@@ -5,7 +5,7 @@ go 1.24.0
 toolchain go1.24.13
 
 require (
-	github.com/aws/aws-sdk-go-v2/service/kms v1.51.1
+	github.com/aws/aws-sdk-go-v2/service/kms v1.52.0
 	github.com/ethereum/go-ethereum v1.17.3
 	github.com/gorilla/websocket v1.5.3
 	github.com/shopspring/decimal v1.4.0
