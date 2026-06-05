@@ -118,6 +118,40 @@ type EventsRequest struct {
 	SlugContains    string   `json:"slug_contains,omitempty"`
 }
 
+type EventsKeysetRequest struct {
+	Limit           *int     `json:"limit,omitempty"`
+	Offset          *int     `json:"offset,omitempty"`
+	NextCursor      string   `json:"next_cursor,omitempty"`
+	Order           []string `json:"order,omitempty"`
+	Ascending       *bool    `json:"ascending,omitempty"`
+	IDs             []string `json:"id,omitempty"`
+	TagID           string   `json:"tag_id,omitempty"`
+	ExcludeTagID    []string `json:"exclude_tag_id,omitempty"`
+	Slugs           []string `json:"slug,omitempty"`
+	TagSlug         string   `json:"tag_slug,omitempty"`
+	RelatedTags     *bool    `json:"related_tags,omitempty"`
+	Featured        *bool    `json:"featured,omitempty"`
+	Cyom            *bool    `json:"cyom,omitempty"`
+	IncludeChat     *bool    `json:"include_chat,omitempty"`
+	IncludeTemplate *bool    `json:"include_template,omitempty"`
+	Recurrence      string   `json:"recurrence,omitempty"`
+	Closed          *bool    `json:"closed,omitempty"`
+	LiquidityMin    *string  `json:"liquidity_min,omitempty"`
+	LiquidityMax    *string  `json:"liquidity_max,omitempty"`
+	VolumeMin       *string  `json:"volume_min,omitempty"`
+	VolumeMax       *string  `json:"volume_max,omitempty"`
+	StartDateMin    string   `json:"start_date_min,omitempty"`
+	StartDateMax    string   `json:"start_date_max,omitempty"`
+	EndDateMin      string   `json:"end_date_min,omitempty"`
+	EndDateMax      string   `json:"end_date_max,omitempty"`
+	SlugContains    string   `json:"slug_contains,omitempty"`
+}
+
+type EventsKeysetResponse struct {
+	Events     []Event `json:"events"`
+	NextCursor string  `json:"next_cursor"`
+}
+
 type EventByIDRequest struct {
 	ID              string `json:"-"`
 	IncludeChat     *bool  `json:"include_chat,omitempty"`

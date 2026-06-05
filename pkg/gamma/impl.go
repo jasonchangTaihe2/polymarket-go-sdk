@@ -230,12 +230,13 @@ func (c *clientImpl) Events(ctx context.Context, req *EventsRequest) ([]Event, e
 	return resp, err
 }
 
-func (c *clientImpl) EventsKeyset(ctx context.Context, req *EventsRequest) ([]Event, error) {
+func (c *clientImpl) EventsKeyset(ctx context.Context, req *EventsRequest) (EventsKeysetResponse, error) {
 	q := buildEventsQuery(req)
 	if req != nil && req.NextCursor != "" {
-		q.Set("next_cursor", req.NextCursor)
+		q.Set("after_cursor", req.NextCursor)
 	}
-	var resp []Event
+
+	var resp EventsKeysetResponse
 	err := c.httpClient.Get(ctx, "/events/keyset", q, &resp)
 	return resp, err
 }
