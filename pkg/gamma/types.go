@@ -313,6 +313,10 @@ type Market struct {
 	OneWeekPriceChange    float64         `json:"oneWeekPriceChange,omitempty"`
 	OneMonthPriceChange   float64         `json:"oneMonthPriceChange,omitempty"`
 	OneYearPriceChange    float64         `json:"oneYearPriceChange,omitempty"`
+
+	// Group
+	GroupItemTitle     string `json:"groupItemTitle"`
+	GroupItemThreshold string `json:"groupItemThreshold"`
 }
 
 // ParsedTokens builds a Token slice by combining ClobTokenIds and Outcomes.
