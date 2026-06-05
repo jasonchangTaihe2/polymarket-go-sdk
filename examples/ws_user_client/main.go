@@ -6,9 +6,11 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 
 	polymarket "github.com/jasonchangTaihe2/polymarket-go-sdk/v2"
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/ws"
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/gamma"
 )
@@ -36,7 +38,12 @@ func main() {
 	if apiKey.Key == "" || apiKey.Secret == "" || apiKey.Passphrase == "" {
 		log.Println("No L2 API key provided, deriving via L1 signature...")
 		l1Client := client.CLOB.WithAuth(signer, nil)
-		resp, err := l1Client.DeriveAPIKey(ctx)
+		req := clobtypes.APIKeyRequest{
+			Address:   signer.Address().Hex(),
+			Timestamp: time.Now().Unix(),
+			// Sig:
+		}
+		resp, err := l1Client.DeriveAPIKey(ctx, req)
 		if err != nil {
 			log.Fatalf("DeriveAPIKey failed: %v", err)
 		}

@@ -268,7 +268,7 @@ func runAuthExamples(ctx context.Context) error {
 	}
 	fmt.Printf("4. HMAC signature: %s...\n", hmacSig[:20])
 
-	headers, err := auth.BuildL1Headers(signer, time.Now().Unix(), 1)
+	headers, err := auth.BuildL1Headers(signer.Address().Hex(), hmacSig, time.Now().Unix(), 1)
 	if err != nil {
 		return fmt.Errorf("build L1 headers failed: %w", err)
 	}

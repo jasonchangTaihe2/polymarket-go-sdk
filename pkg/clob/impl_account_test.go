@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
@@ -156,7 +157,12 @@ func TestAccountMethods(t *testing.T) {
 			httpClient: transport.NewClient(doer, "http://example"),
 			signer:     signer,
 		}
-		resp, err := client.CreateAPIKey(ctx)
+		req := clobtypes.APIKeyRequest{
+			Address:   signer.Address().Hex(),
+			Timestamp: time.Now().Unix(),
+			// Sig:
+		}
+		resp, err := client.CreateAPIKey(ctx, req)
 		if err != nil || resp.APIKey != "k2" {
 			t.Errorf("CreateAPIKey failed: %v", err)
 		}
@@ -168,9 +174,14 @@ func TestAccountMethods(t *testing.T) {
 		client := &clientImpl{
 			httpClient: transport.NewClient(doer, "http://example"),
 			signer:     signer,
-			authNonce:  &nonce,
 		}
-		_, err := client.CreateAPIKey(ctx)
+		req := clobtypes.APIKeyRequest{
+			Address:   signer.Address().Hex(),
+			Timestamp: time.Now().Unix(),
+			// Sig:
+			Nonce: nonce,
+		}
+		_, err := client.CreateAPIKey(ctx, req)
 		if err != nil {
 			t.Errorf("CreateAPIKey default nonce failed: %v", err)
 		}
@@ -187,7 +198,12 @@ func TestAccountMethods(t *testing.T) {
 			httpClient: transport.NewClient(doer, "http://example"),
 			signer:     signer,
 		}
-		resp, err := client.DeriveAPIKey(ctx)
+		req := clobtypes.APIKeyRequest{
+			Address: signer.Address().Hex(),
+			// Sig:
+			Timestamp: time.Now().Unix(),
+		}
+		resp, err := client.DeriveAPIKey(ctx, req)
 		if err != nil || resp.APIKey != "k3" {
 			t.Errorf("DeriveAPIKey failed: %v", err)
 		}

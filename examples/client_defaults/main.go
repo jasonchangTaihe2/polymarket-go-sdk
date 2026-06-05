@@ -63,7 +63,12 @@ func main() {
 
 	if os.Getenv("POLYMARKET_CREATE_API_KEY") == "1" {
 		fmt.Println("\n2. Create API key using default auth nonce")
-		_, err = clobClient.CreateAPIKey(ctx)
+		req := clobtypes.APIKeyRequest{
+			Address:   signer.Address().Hex(),
+			Timestamp: time.Now().Unix(),
+			// Sig:
+		}
+		_, err = clobClient.CreateAPIKey(ctx, req)
 		if err != nil {
 			log.Fatalf("CreateAPIKey failed: %v", err)
 		}

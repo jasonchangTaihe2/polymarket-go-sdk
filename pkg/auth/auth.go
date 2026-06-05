@@ -18,12 +18,12 @@ import (
 	"strings"
 	"time"
 
-	sdkerrors "github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/errors"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/common/math"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
+	sdkerrors "github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/errors"
 )
 
 // ClobAuthDomain is the EIP-712 domain used for CLOB authentication requests.
@@ -124,6 +124,7 @@ var (
 	ErrMissingBuilderConfig   = sdkerrors.ErrMissingBuilderConfig
 	ErrProxyWalletUnsupported = sdkerrors.ErrProxyWalletUnsupported
 	ErrSafeWalletUnsupported  = sdkerrors.ErrSafeWalletUnsupported
+	ErrSignFailed             = sdkerrors.ErrSignFailed
 )
 
 // Authentication header keys used by Polymarket API.
@@ -176,12 +177,7 @@ func (s *PrivateKeySigner) ChainID() *big.Int {
 	return s.chainID
 }
 
-// BuildL1Headers creates the L1 authentication headers required for API key management.
-// It generates an EIP-712 signature over a standard authentication message.
-func BuildL1Headers(signer Signer, timestamp int64, nonce int64) (http.Header, error) {
-	if signer == nil {
-		return nil, ErrMissingSigner
-	}
+func (signer *PrivateKeySigner) SignL1(timestamp, nonce int64) ([]byte, error) {
 	if timestamp == 0 {
 		timestamp = time.Now().Unix()
 	}
@@ -204,9 +200,62 @@ func BuildL1Headers(signer Signer, timestamp int64, nonce int64) (http.Header, e
 		return nil, fmt.Errorf("sign clob auth: %w", err)
 	}
 
+	return sig, nil
+}
+
+// BuildL1Headers creates the L1 authentication headers required for API key management.
+// It generates an EIP-712 signature over a standard authentication message.
+func BuildL1HeadersOld(signer Signer, timestamp int64, nonce int64) (http.Header, error) {
+	if signer == nil {
+		return nil, ErrMissingSigner
+	}
+	sig, err := signer.(*PrivateKeySigner).SignL1(timestamp, nonce)
+	if err != nil {
+		return nil, ErrSignFailed
+	}
+
 	headers := http.Header{}
 	headers.Set(HeaderPolyAddress, signer.Address().Hex())
 	headers.Set(HeaderPolySignature, hexutil.Encode(sig))
+	headers.Set(HeaderPolyTimestamp, fmt.Sprintf("%d", timestamp))
+	headers.Set(HeaderPolyNonce, fmt.Sprintf("%d", nonce))
+	return headers, nil
+}
+
+// func SignL1Headers(address string, timestamp int64, nonce int64, pk *ecdsa.PrivateKey) ([]byte, error) {
+// 	message := apitypes.TypedDataMessage{
+// 		"address":   address,
+// 		"timestamp": fmt.Sprintf("%d", timestamp),
+// 		"nonce":     (*math.HexOrDecimal256)(big.NewInt(nonce)),
+// 		"message":   "This message attests that I control the given wallet",
+// 	}
+
+// 	typedData := apitypes.TypedData{
+// 		Types:       ClobAuthTypes,
+// 		PrimaryType: "ClobAuth",
+// 		Domain:      *ClobAuthDomain,
+// 		Message:     message,
+// 	}
+
+// 	challengeHash, _, err := apitypes.TypedDataAndHash(typedData)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("TypedDataAndHad failed: %w", err)
+// 	}
+
+// 	signatureBytes, err := crypto.Sign(challengeHash, pk)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("sign clob auth: %w", err)
+// 	}
+
+// 	return signatureBytes, nil
+// }
+
+// BuildL1Headers creates the L1 authentication headers required for API key management.
+// It generates an EIP-712 signature over a standard authentication message.
+func BuildL1Headers(address string, sig string, timestamp, nonce int64) (http.Header, error) {
+	headers := http.Header{}
+	headers.Set(HeaderPolyAddress, address)
+	headers.Set(HeaderPolySignature, sig)
 	headers.Set(HeaderPolyTimestamp, fmt.Sprintf("%d", timestamp))
 	headers.Set(HeaderPolyNonce, fmt.Sprintf("%d", nonce))
 	return headers, nil

@@ -206,20 +206,17 @@ func (c *clientImpl) UserRewardsByMarket(ctx context.Context, req *clobtypes.Use
 	return resp, mapError(err)
 }
 
-func (c *clientImpl) CreateAPIKey(ctx context.Context) (clobtypes.APIKeyResponse, error) {
+func (c *clientImpl) CreateAPIKey(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error) {
 	nonce := int64(0)
 	if c.authNonce != nil {
 		nonce = *c.authNonce
 	}
-	return c.CreateAPIKeyWithNonce(ctx, nonce)
+	req.Nonce = nonce
+	return c.CreateAPIKeyWithNonce(ctx, req)
 }
 
-func (c *clientImpl) CreateAPIKeyWithNonce(ctx context.Context, nonce int64) (clobtypes.APIKeyResponse, error) {
-	if c.signer == nil {
-		return clobtypes.APIKeyResponse{}, auth.ErrMissingSigner
-	}
-
-	headersRaw, err := auth.BuildL1Headers(c.signer, 0, nonce)
+func (c *clientImpl) CreateAPIKeyWithNonce(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error) {
+	headersRaw, err := auth.BuildL1Headers(req.Address, req.Sig, req.Timestamp, req.Nonce)
 	if err != nil {
 		return clobtypes.APIKeyResponse{}, err
 	}
@@ -261,20 +258,18 @@ func (c *clientImpl) DeleteAPIKey(ctx context.Context, id string) (clobtypes.API
 // DeriveAPIKey retrieves an existing API key derived from the signer's wallet.
 // The API key must have been previously created via CreateAPIKey or CreateOrDeriveAPIKey.
 // For first-time setup, use CreateOrDeriveAPIKey which creates a key if one does not exist.
-func (c *clientImpl) DeriveAPIKey(ctx context.Context) (clobtypes.APIKeyResponse, error) {
+func (c *clientImpl) DeriveAPIKey(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error) {
 	nonce := int64(0)
 	if c.authNonce != nil {
 		nonce = *c.authNonce
 	}
-	return c.DeriveAPIKeyWithNonce(ctx, nonce)
+	req.Nonce = nonce
+	return c.DeriveAPIKeyWithNonce(ctx, req)
 }
 
-func (c *clientImpl) DeriveAPIKeyWithNonce(ctx context.Context, nonce int64) (clobtypes.APIKeyResponse, error) {
-	if c.signer == nil {
-		return clobtypes.APIKeyResponse{}, auth.ErrMissingSigner
-	}
+func (c *clientImpl) DeriveAPIKeyWithNonce(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error) {
 	var resp clobtypes.APIKeyResponse
-	headersRaw, err := auth.BuildL1Headers(c.signer, 0, nonce)
+	headersRaw, err := auth.BuildL1Headers(req.Address, req.Sig, req.Timestamp, req.Nonce)
 	if err != nil {
 		return clobtypes.APIKeyResponse{}, err
 	}
@@ -291,20 +286,21 @@ func (c *clientImpl) DeriveAPIKeyWithNonce(ctx context.Context, nonce int64) (cl
 // CreateOrDeriveAPIKey is the recommended method for first-time API key setup.
 // It first attempts to create a new API key. If the key already exists, it
 // falls back to deriving the existing key.
-func (c *clientImpl) CreateOrDeriveAPIKey(ctx context.Context) (clobtypes.APIKeyResponse, error) {
+func (c *clientImpl) CreateOrDeriveAPIKey(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error) {
 	nonce := int64(0)
 	if c.authNonce != nil {
 		nonce = *c.authNonce
 	}
-	return c.CreateOrDeriveAPIKeyWithNonce(ctx, nonce)
+	req.Nonce = nonce
+	return c.CreateOrDeriveAPIKeyWithNonce(ctx, req)
 }
 
-func (c *clientImpl) CreateOrDeriveAPIKeyWithNonce(ctx context.Context, nonce int64) (clobtypes.APIKeyResponse, error) {
-	resp, err := c.CreateAPIKeyWithNonce(ctx, nonce)
+func (c *clientImpl) CreateOrDeriveAPIKeyWithNonce(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error) {
+	resp, err := c.CreateAPIKeyWithNonce(ctx, req)
 	if err == nil {
 		return resp, nil
 	}
-	return c.DeriveAPIKeyWithNonce(ctx, nonce)
+	return c.DeriveAPIKeyWithNonce(ctx, req)
 }
 
 func (c *clientImpl) ClosedOnlyStatus(ctx context.Context) (clobtypes.ClosedOnlyResponse, error) {

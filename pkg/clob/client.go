@@ -193,21 +193,21 @@ type Client interface {
 	// -- API Key Management --
 
 	// CreateAPIKey creates a new set of L2 API credentials using an L1 signature.
-	CreateAPIKey(ctx context.Context) (clobtypes.APIKeyResponse, error)
+	CreateAPIKey(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error)
 	// CreateAPIKeyWithNonce creates a new set of L2 API credentials with an explicit nonce.
-	CreateAPIKeyWithNonce(ctx context.Context, nonce int64) (clobtypes.APIKeyResponse, error)
+	CreateAPIKeyWithNonce(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error)
 	// ListAPIKeys lists all active L2 API keys for the authenticated account.
 	ListAPIKeys(ctx context.Context) (clobtypes.APIKeyListResponse, error)
 	// DeleteAPIKey revokes a specific L2 API key.
 	DeleteAPIKey(ctx context.Context, id string) (clobtypes.APIKeyResponse, error)
 	// DeriveAPIKey computes the deterministic L2 API key associated with the L1 wallet.
-	DeriveAPIKey(ctx context.Context) (clobtypes.APIKeyResponse, error)
+	DeriveAPIKey(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error)
 	// DeriveAPIKeyWithNonce computes the deterministic L2 API key with an explicit nonce.
-	DeriveAPIKeyWithNonce(ctx context.Context, nonce int64) (clobtypes.APIKeyResponse, error)
+	DeriveAPIKeyWithNonce(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error)
 	// CreateOrDeriveAPIKey attempts to create a new API key, falling back to derive on failure.
-	CreateOrDeriveAPIKey(ctx context.Context) (clobtypes.APIKeyResponse, error)
+	CreateOrDeriveAPIKey(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error)
 	// CreateOrDeriveAPIKeyWithNonce attempts to create a new API key with an explicit nonce, falling back to derive on failure.
-	CreateOrDeriveAPIKeyWithNonce(ctx context.Context, nonce int64) (clobtypes.APIKeyResponse, error)
+	CreateOrDeriveAPIKeyWithNonce(ctx context.Context, req clobtypes.APIKeyRequest) (clobtypes.APIKeyResponse, error)
 	// ClosedOnlyStatus checks if the account is restricted to "close-only" trading.
 	ClosedOnlyStatus(ctx context.Context) (clobtypes.ClosedOnlyResponse, error)
 
