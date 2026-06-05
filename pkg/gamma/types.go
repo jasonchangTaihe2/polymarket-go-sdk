@@ -346,6 +346,15 @@ type Tag struct {
 	ID    string `json:"id"`
 	Label string `json:"label"`
 	Slug  string `json:"slug"`
+
+	ForceShow   bool   `json:"forceShow"`
+	PublishedAt string `json:"publishedAt"`
+	CreatedBy   int    `json:"createdBy"`
+	UpdatedBy   int    `json:"updatedBy"`
+	CreatedAt   string `json:"createdAt"`
+	UpdatedAt   string `json:"updatedAt"`
+	ForceHide   bool   `json:"forceHide"`
+	IsCarousel  bool   `json:"isCarousel"`
 }
 
 type Token struct {
