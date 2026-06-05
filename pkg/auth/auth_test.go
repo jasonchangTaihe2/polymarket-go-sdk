@@ -101,7 +101,11 @@ func TestBuildL2Headers(t *testing.T) {
 
 	timestamp := time.Now().Unix()
 	body := `{"foo":"bar"}`
-	headers, err := BuildL2Headers(signer, apiKey, "POST", "/order", &body, timestamp)
+	rawHeaders, err := BuildL2Headers(signer.Address().Hex(), apiKey, "POST", "/order", timestamp, body)
+	headers := make(http.Header)
+	for k, v := range rawHeaders {
+		headers.Set(k, v)
+	}
 	if err != nil {
 		t.Fatalf("BuildL2Headers failed: %v", err)
 	}
@@ -119,10 +123,10 @@ func TestBuildL2Headers(t *testing.T) {
 		t.Error("missing signature header")
 	}
 
-	// Test missing signer
-	_, err = BuildL2Headers(nil, apiKey, "GET", "/", nil, 0)
-	if err != ErrMissingSigner {
-		t.Errorf("expected ErrMissingSigner, got %v", err)
+	// Test missing creds
+	_, err = BuildL2Headers(signer.Address().Hex(), nil, "GET", "/", 0, "")
+	if err != ErrMissingCreds {
+		t.Errorf("expected ErrMissingCreds, got %v", err)
 	}
 }
 

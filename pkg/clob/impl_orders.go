@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"math/big"
+	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
@@ -300,8 +302,19 @@ func (c *clientImpl) Orders(ctx context.Context, req *clobtypes.OrdersRequest) (
 			q.Set("next_cursor", nextCursor)
 		}
 	}
+
+	method := http.MethodGet
+	path := "/data/orders"
+	headers, err := auth.BuildL2Headers(c.signer.Address().Hex(), c.apiKey,
+		method, path,
+		time.Now().Unix(),
+		"")
+	if err != nil {
+		return clobtypes.OrdersResponse{}, err
+	}
+
 	var resp clobtypes.OrdersResponse
-	err := c.httpClient.Get(ctx, "/data/orders", q, &resp)
+	err = c.httpClient.CallWithHeaders(ctx, method, path, q, nil, &resp, headers)
 	return resp, mapError(err)
 }
 

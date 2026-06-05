@@ -296,7 +296,7 @@ func decodeSecret(secret string) ([]byte, error) {
 }
 
 // BuildL2Headers returns the headers required for an HMAC-authenticated L2 request.
-func BuildL2Headers(signer Signer, apiKey *APIKey, method, path string, body *string, timestamp int64) (http.Header, error) {
+func BuildL2HeadersOld(signer Signer, apiKey *APIKey, method, path string, body *string, timestamp int64) (http.Header, error) {
 	if signer == nil {
 		return nil, ErrMissingSigner
 	}
@@ -323,6 +323,36 @@ func BuildL2Headers(signer Signer, apiKey *APIKey, method, path string, body *st
 	headers.Set(HeaderPolyPassphrase, apiKey.Passphrase)
 	headers.Set(HeaderPolyTimestamp, fmt.Sprintf("%d", timestamp))
 	headers.Set(HeaderPolySignature, sig)
+	return headers, nil
+}
+
+// BuildL2Headers returns the headers required for an HMAC-authenticated L2 request.
+func BuildL2Headers(
+	address string,
+	apiKey *APIKey,
+	method, path string,
+	timestamp int64,
+	body string,
+) (map[string]string, error) {
+	if apiKey == nil {
+		return nil, ErrMissingCreds
+	}
+
+	message := fmt.Sprintf("%d%s%s%s", timestamp, method, path, body)
+
+	sig, err := SignHMAC(apiKey.Secret, message)
+	if err != nil {
+		return nil, err
+	}
+
+	headers := map[string]string{
+		HeaderPolyAddress:    address,
+		HeaderPolyAPIKey:     apiKey.Key,
+		HeaderPolyPassphrase: apiKey.Passphrase,
+		HeaderPolyTimestamp:  fmt.Sprintf("%d", timestamp),
+		HeaderPolySignature:  string(sig),
+	}
+
 	return headers, nil
 }
 
