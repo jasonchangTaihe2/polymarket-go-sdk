@@ -7,9 +7,9 @@ import (
 	"os"
 	"time"
 
-	polymarket "github.com/GoPolymarket/polymarket-go-sdk/v2"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
-	clobtypes "github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/clobtypes"
+	polymarket "github.com/jasonchangTaihe2/polymarket-go-sdk/v2"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	clobtypes "github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
 )
 
 func main() {

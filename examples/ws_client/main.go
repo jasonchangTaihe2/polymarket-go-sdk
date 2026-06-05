@@ -9,9 +9,9 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/ws"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/gamma"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/transport"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/ws"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/gamma"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/transport"
 )
 
 func main() {

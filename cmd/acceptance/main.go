@@ -12,11 +12,11 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	polymarket "github.com/GoPolymarket/polymarket-go-sdk/v2"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/clobtypes"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/ws"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/rtds"
+	polymarket "github.com/jasonchangTaihe2/polymarket-go-sdk/v2"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/ws"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/rtds"
 )
 
 type checkResult struct {

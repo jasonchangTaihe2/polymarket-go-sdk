@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/transport"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/transport"
 )
 
 const (

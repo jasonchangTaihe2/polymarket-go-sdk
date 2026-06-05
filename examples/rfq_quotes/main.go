@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/rfq"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/transport"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/rfq"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/transport"
 )
 
 func main() {

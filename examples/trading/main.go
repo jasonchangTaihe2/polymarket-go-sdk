@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/clobtypes"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
 	"context"
 	"fmt"
 	"log"
@@ -12,10 +12,10 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/shopspring/decimal"
 
-	polymarket "github.com/GoPolymarket/polymarket-go-sdk/v2"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
+	polymarket "github.com/jasonchangTaihe2/polymarket-go-sdk/v2"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
 	
-"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/types"
+"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/types"
 )
 
 func main() {

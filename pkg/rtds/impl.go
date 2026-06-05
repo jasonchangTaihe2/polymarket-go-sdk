@@ -7,9 +7,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
-	sdkerrors "github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/errors"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/logger"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	sdkerrors "github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/errors"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/logger"
 	"github.com/gorilla/websocket"
 )
 

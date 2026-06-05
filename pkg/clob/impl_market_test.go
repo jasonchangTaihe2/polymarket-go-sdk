@@ -9,8 +9,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/clobtypes"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/transport"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/transport"
 )
 
 type assertBodyDoer struct {

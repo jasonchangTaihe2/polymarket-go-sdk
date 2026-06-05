@@ -3,7 +3,7 @@ package rtds
 import (
 	"context"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
 )
 
 // Client defines the RTDS WebSocket interface.

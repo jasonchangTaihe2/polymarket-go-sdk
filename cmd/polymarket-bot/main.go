@@ -10,9 +10,9 @@ import (
 	"sort"
 	"strings"
 
-	polymarket "github.com/GoPolymarket/polymarket-go-sdk/v2"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/bot"
+	polymarket "github.com/jasonchangTaihe2/polymarket-go-sdk/v2"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/bot"
 )
 
 func main() {

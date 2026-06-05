@@ -1,15 +1,15 @@
 package polymarket
 
 import (
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/auth"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/bridge"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/clob/ws"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/ctf"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/data"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/gamma"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/rtds"
-	"github.com/GoPolymarket/polymarket-go-sdk/v2/pkg/transport"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/bridge"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/ws"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/ctf"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/data"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/gamma"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/rtds"
+	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/transport"
 )
 
 // Option mutates the root client.
