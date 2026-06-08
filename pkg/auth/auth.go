@@ -177,7 +177,7 @@ func (s *PrivateKeySigner) ChainID() *big.Int {
 	return s.chainID
 }
 
-func (signer *PrivateKeySigner) SignL1(timestamp, nonce int64) ([]byte, error) {
+func (signer *PrivateKeySigner) SignL1(timestamp, nonce int64) (string, error) {
 	if timestamp == 0 {
 		timestamp = time.Now().Unix()
 	}
@@ -197,10 +197,10 @@ func (signer *PrivateKeySigner) SignL1(timestamp, nonce int64) ([]byte, error) {
 
 	sig, err := signer.SignTypedData(domain, ClobAuthTypes, message, "ClobAuth")
 	if err != nil {
-		return nil, fmt.Errorf("sign clob auth: %w", err)
+		return "", fmt.Errorf("sign clob auth: %w", err)
 	}
 
-	return sig, nil
+	return hexutil.Encode(sig), nil
 }
 
 // BuildL1Headers creates the L1 authentication headers required for API key management.
@@ -216,7 +216,7 @@ func BuildL1HeadersOld(signer Signer, timestamp int64, nonce int64) (http.Header
 
 	headers := http.Header{}
 	headers.Set(HeaderPolyAddress, signer.Address().Hex())
-	headers.Set(HeaderPolySignature, hexutil.Encode(sig))
+	headers.Set(HeaderPolySignature, sig)
 	headers.Set(HeaderPolyTimestamp, fmt.Sprintf("%d", timestamp))
 	headers.Set(HeaderPolyNonce, fmt.Sprintf("%d", nonce))
 	return headers, nil
