@@ -168,6 +168,8 @@ type (
 		Limit      int    `json:"limit,omitempty"`
 		Cursor     string `json:"cursor,omitempty"`
 		NextCursor string `json:"next_cursor,omitempty"`
+
+		Timestamp int64
 	}
 	TradesRequest struct {
 		ID         string `json:"id,omitempty"`

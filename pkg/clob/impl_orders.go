@@ -3,12 +3,12 @@ package clob
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/big"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/auth"
 	"github.com/jasonchangTaihe2/polymarket-go-sdk/v2/pkg/clob/clobtypes"
@@ -307,11 +307,12 @@ func (c *clientImpl) Orders(ctx context.Context, req *clobtypes.OrdersRequest) (
 	path := "/data/orders"
 	headers, err := auth.BuildL2Headers(c.signer.Address().Hex(), c.apiKey,
 		method, path,
-		time.Now().Unix(),
+		req.Timestamp,
 		"")
 	if err != nil {
 		return clobtypes.OrdersResponse{}, err
 	}
+	log.Printf("headers %+v", headers)
 
 	var resp clobtypes.OrdersResponse
 	err = c.httpClient.CallWithHeaders(ctx, method, path, q, nil, &resp, headers)
