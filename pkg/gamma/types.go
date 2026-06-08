@@ -432,14 +432,14 @@ type Team struct {
 }
 
 type SportsMetadata struct {
-	ID         *int     `json:"id,omitempty"`
-	Sport      string   `json:"sport"`
-	Image      string   `json:"image"`
-	Resolution string   `json:"resolution"`
-	Ordering   string   `json:"ordering"`
-	Tags       []string `json:"tags,omitempty"`
-	Series     string   `json:"series,omitempty"`
-	CreatedAt  string   `json:"createdAt,omitempty"`
+	ID         *int   `json:"id,omitempty"`
+	Sport      string `json:"sport"`
+	Image      string `json:"image"`
+	Resolution string `json:"resolution"`
+	Ordering   string `json:"ordering"`
+	Tags       string `json:"tags,omitempty"`
+	Series     string `json:"series,omitempty"`
+	CreatedAt  string `json:"createdAt,omitempty"`
 }
 
 type SportsMarketTypesResponse struct {
