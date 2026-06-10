@@ -3,7 +3,6 @@ package clob
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 	"net/http"
 	"net/url"
@@ -202,6 +201,19 @@ func (c *clientImpl) PostOrder(ctx context.Context, req *clobtypes.SignedOrder) 
 	if err != nil {
 		return resp, err
 	}
+
+	// confirm with ts, no need this
+	// payload["order"].(map[string]any)["tokenId"] = fmt.Sprintf("0x%064x", req.Order.TokenID)
+
+	// timestamp must be string
+	payload["order"].(map[string]any)["timestamp"] = fmt.Sprintf("%d", req.Order.Timestamp)
+
+	// salt must be integer
+	payload["order"].(map[string]any)["salt"] = req.Order.Salt.Int.Uint64()
+
+	// j, _ := json.Marshal(payload)
+	// log.Println(string(j))
+
 	err = c.httpClient.Post(ctx, "/order", payload, &resp)
 	return resp, mapError(err)
 }
@@ -312,7 +324,8 @@ func (c *clientImpl) Orders(ctx context.Context, req *clobtypes.OrdersRequest) (
 	if err != nil {
 		return clobtypes.OrdersResponse{}, err
 	}
-	log.Printf("headers %+v", headers)
+	// j, _ := json.Marshal(headers)
+	// log.Printf("headers %+v", string(j))
 
 	var resp clobtypes.OrdersResponse
 	err = c.httpClient.CallWithHeaders(ctx, method, path, q, nil, &resp, headers)
