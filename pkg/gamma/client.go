@@ -63,7 +63,7 @@ type Client interface {
 	// MarketsAll automatically iterates through all pages to retrieve all available markets.
 	MarketsAll(ctx context.Context, req *MarketsRequest) ([]Market, error)
 	// MarketsKeyset retrieves a cursor-based paginated list of markets using keyset pagination.
-	MarketsKeyset(ctx context.Context, req *MarketsRequest) ([]Market, error)
+	MarketsKeyset(ctx context.Context, req *MarketsRequest) (MarketsKeysetResponse, error)
 	// MarketByID retrieves a specific market by its ID.
 	MarketByID(ctx context.Context, req *MarketByIDRequest) (*Market, error)
 	// MarketBySlug retrieves a specific market by its URL slug.

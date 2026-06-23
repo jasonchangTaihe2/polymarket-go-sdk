@@ -46,6 +46,11 @@ type MarketsRequest struct {
 	ExcludeTagID        []string `json:"exclude_tag_id,omitempty"`
 }
 
+type MarketsKeysetResponse struct {
+	Markets    []Market `json:"markets"`
+	NextCursor string   `json:"next_cursor"`
+}
+
 type TeamsRequest struct {
 	Limit        *int     `json:"limit,omitempty"`
 	Offset       *int     `json:"offset,omitempty"`
