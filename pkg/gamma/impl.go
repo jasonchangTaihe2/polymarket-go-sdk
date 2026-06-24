@@ -357,7 +357,7 @@ func (c *clientImpl) Markets(ctx context.Context, req *MarketsRequest) ([]Market
 func (c *clientImpl) MarketsKeyset(ctx context.Context, req *MarketsRequest) (MarketsKeysetResponse, error) {
 	q := buildMarketsQuery(req)
 	if req != nil && req.NextCursor != "" {
-		q.Set("next_cursor", req.NextCursor)
+		q.Set("after_cursor", req.NextCursor)
 	}
 	var resp MarketsKeysetResponse
 	err := c.httpClient.Get(ctx, "/markets/keyset", q, &resp)
