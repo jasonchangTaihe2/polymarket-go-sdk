@@ -291,7 +291,12 @@ func (c *clientImpl) Order(ctx context.Context, id string) (clobtypes.OrderRespo
 	return resp, mapError(err)
 }
 
-func (c *clientImpl) Orders(ctx context.Context, req *clobtypes.OrdersRequest) (clobtypes.OrdersResponse, error) {
+func (c *clientImpl) Orders(ctx context.Context, req *clobtypes.OrdersRequest) (resp clobtypes.OrdersResponse, err error) {
+	if c.signer == nil {
+		err = auth.ErrMissingSigner
+		return
+	}
+
 	q := url.Values{}
 	if req != nil {
 		if req.ID != "" {
@@ -327,7 +332,6 @@ func (c *clientImpl) Orders(ctx context.Context, req *clobtypes.OrdersRequest) (
 	// j, _ := json.Marshal(headers)
 	// log.Printf("headers %+v", string(j))
 
-	var resp clobtypes.OrdersResponse
 	err = c.httpClient.CallWithHeaders(ctx, method, path, q, nil, &resp, headers)
 	return resp, mapError(err)
 }
