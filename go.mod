@@ -3,7 +3,7 @@ module github.com/GoPolymarket/polymarket-go-sdk/v2
 go 1.25.0
 
 require (
-	github.com/aws/aws-sdk-go-v2/service/kms v1.54.0
+	github.com/aws/aws-sdk-go-v2/service/kms v1.54.1
 	github.com/ethereum/go-ethereum v1.17.4
 	github.com/gorilla/websocket v1.5.3
 	github.com/shopspring/decimal v1.4.0
