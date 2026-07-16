@@ -58,6 +58,9 @@ func TestBuildOrderPayloadCasingAndOptions(t *testing.T) {
 	if orderMap["signature"] != "0xsig" {
 		t.Fatalf("signature mismatch: got %v", orderMap["signature"])
 	}
+	if orderMap["salt"] != json.Number("1") {
+		t.Fatalf("salt mismatch: got %#v", orderMap["salt"])
+	}
 }
 
 func TestBuildOrderPayloadPoly1271Compatibility(t *testing.T) {
